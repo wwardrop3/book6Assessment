@@ -1,0 +1,55 @@
+{
+    "authors":[
+        {
+            "id": 1,
+            "name": "John Doe"
+        },
+        {
+            "id": 2,
+            "name": "Jane Doe"
+        },
+        {
+            "id": 3,
+            "name": "Will Doo"
+        }
+    ],
+    "recipients": [
+        {
+            "id": 1,
+            "name": "Apple Bee"
+        },
+        {
+            "id": 2,
+            "name": "Cruella Deville"
+        },
+        {
+            "id": 3,
+            "name": "Bobby Bucher"
+        }
+    ],
+    "topics": [
+        {
+            "id": 1,
+            "name": "Emergency"
+        },
+        {
+            "id": 2,
+            "name": "Sup"
+        },
+        {
+            "id": 3,
+            "name": "Money Request"
+        }
+    ],
+    "messages": [
+        {
+            "id": 3,
+            "content": "Message content",
+            "dateSent": "date",
+            "authorId": 2,
+            "topicId": 1,
+            "recipientId": 3
+        }
+    ]
+   
+}
