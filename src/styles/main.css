@@ -2,12 +2,39 @@
     border: 3px solid gray
 }
 
+h4{
+    color:red;
+    font-size: xx-large;
+}
+nav {
+    display: flex;
+    height: 30%;
+    justify-content: center;
+    background-color: lightblue;
+}
+
+.inputSelection{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: min-content;
+}
+
 .topicList {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: auto;
 }
 
 .topicOptions {
     display: flex;
     flex-direction: row;
+}
+
+#letterContent{
+    height: 120px;
+    width: 100%;
+    align-items: center;
 }

@@ -8,8 +8,9 @@ import { applicationState, getLetters, setAuthor, setLetter, setRecipient, setLe
 
 //function that returns the skeleton of the html elements
 export const Outputs = () => {
-    return `<h1>Pen Pal Society</h1>
-        <section id = "authorInput">
+    return `<nav>
+        <h1>Pen Pal Society</h1></nav>
+        <section id = "authorInput" class = "inputSelection">
             <h4>Authors</h4>
             ${Authors()}
 
@@ -19,17 +20,15 @@ export const Outputs = () => {
             ${Letters()}
     
 
-
-
         </section>
-        <section id = "topics">
+        <section id = "topics" class = "inputSelection">
             <h4>Topics</h4>
             ${Topics()}
 
 
 
         </section>
-        <section id = "recipients">
+        <section id = "recipients" class = "inputSelection">
             <h4>Recipient</h4>
             ${Recipients()}
 
@@ -68,11 +67,9 @@ export const letterOutput = () => {
     // joins each array item into one html string
     html+= listArray.join("") 
     html+=`</div>`
-    console.log(listArray)
     return html
         
     };
-    
     
 
 //finds the names of each id value and set to an object that will be passed into an ouput function that will display values under send letter button

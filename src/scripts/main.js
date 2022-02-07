@@ -16,21 +16,14 @@ const renderHTML = () => {
     )
 }
 renderHTML()
-
-
-
-
+//do the set function when they are clicked on for each input///change event
 document.addEventListener(
     "click",
     (clickEvent)=> {
         if(clickEvent.target.id === "sendButton"){
 
             //need to get new Id
-            const letters = getLetters()
-            const lastIndex = letters.length -1
-            const newId = letters[lastIndex].id + 1
-
-            setLetterId(newId)
+            findNewId()
 
             const authorId = document.getElementById("author").value
             setAuthor(parseInt(authorId))
@@ -38,15 +31,20 @@ document.addEventListener(
             const letterContent = document.getElementById("letterContent").value
             setLetter(letterContent)
 
+            //gets the value of the 
             const recipientId = document.getElementById("recipient").value
             setRecipient(parseInt(recipientId))
 
+            //records time the button was clicked aka letter was sent
             setSentTime()
 
+            //send letterBuilder temporary letter object to json file
             sendLetterBuilder(applicationState.letterBuilder)
 
+            //clear the temp letterBuilder array for next input
             resetLetterBuilder()
 
+            //rerender the page with the updated information
             renderHTML()
             
 
@@ -54,4 +52,17 @@ document.addEventListener(
     }
 )
 
+mainContainer.addEventListener(
+    "stateChanged",
+    (customEvent) => {
+        console.log("State Changed")
+    }
+)
 
+
+const findNewId = () => {
+    const letters = getLetters()
+    const lastIndex = letters.length -1
+    const newId = letters[lastIndex].id + 1
+    setLetterId(newId)
+}

@@ -7,7 +7,7 @@ export const applicationState = {
     topics: [],
     recipients: [],
     letters: [],
-    letterBuilder: {}
+    letterBuilder: {topicId: 1,}
 }
 
 //navigate to the api directory in terminal before hosting the json server
@@ -62,11 +62,11 @@ export const fetchRecipients = () => {
 //FETCH stored letter object data from JSON file and then import it into applicationState
 export const fetchLetters = () => {
     //gets the requests array from the api folder
-    return fetch(`${API}/letters`) //Why doesnt this have a second parameter like the fetch method at the bottom???
-        //.then() waits till the fetch is done before converting json data
-        .then(response => response.json())
+    return fetch(`${API}/letters`)
+        //.then() waits till the fetch is done before converting json data---returns PROMISE object--handshake you will get something
+        .then(response => response.json()) //changing from json to JS readable
         .then(
-            //anonymous function
+            //takes the translated data into anonymous function
             (serviceRequests) => {
                 // Store the external state in application state
                 applicationState.letters = serviceRequests
@@ -77,23 +77,17 @@ export const fetchLetters = () => {
     
     
 
-        //BELOW IS ITERATION IDEA BUT DID NOT WORK BECAUSE I COULDNT RETURN EACH ITERATION, WOULD STOP ON FIRST ITERATION BECAUSE OF RETURN
-    //------------------------------------------------------------------------
-//define a function that fetches each array in the json file
-//const iterList = ["authors", "topics", "recipients", "messages"]
-//         
+// -----------------------------------------------------
 
-//for(const dataType of iterList){
-//         fetch(`${API}/${dataType}`)
-//         .then(response => response.json())
-//         .then(serviceRequests => {
-//             applicationState[dataType] = serviceRequests
-//             }
-//         )
-//     }
-// }
-//-----------------------------------------------------
-
+const fetcher = (dataType) => {
+        fetch(`${API}/${dataType}`) //without putting second parameter, defaults to GET method
+        .then(response => response.json())
+        .then(serviceRequests => {
+            applicationState[dataType] = serviceRequests
+            }
+        )
+}
+        
 //define a GET function that returns the each data array
 export const getRecipients = () => {
     return applicationState.recipients.map(recipient => ({...recipient}))
@@ -136,7 +130,7 @@ export const setLetterId = (id) => {
 
 //resets temp letterBuilder in applicationState after sending temp letter object to json file
 export const resetLetterBuilder = () => {
-    applicationState.letterBuilder = {}
+    applicationState.letterBuilder = {topicId: 1,}
 }
 
 //sets the date of when the submit button is clicked
@@ -156,15 +150,15 @@ document.addEventListener(
 export const sendLetterBuilder = (userServiceRequest) => {
     const fetchOptions = {
         //POST tells the API that you want to create something new
-        method: "POST",
+        method: "POST",//get is default, can put Put (edit/update), Delete, Post....
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json" //json is the type we are going for
         },
-        body: JSON.stringify(userServiceRequest)
+        body: JSON.stringify(userServiceRequest) //translating back into json readable data
     }
 
     //fetch options is defined above with the POST method.
-    return fetch(`${API}/letters`, fetchOptions) 
+    return fetch(`${API}/letters`, fetchOptions) //fetch options is object defined above
         .then(response => response.json())
         .then(() => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged")) //This will create a "stateChanged" (just like a "click") event...Program will listen for when this happens
