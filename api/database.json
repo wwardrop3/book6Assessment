@@ -1,55 +1,68 @@
 {
-    "authors":[
-        {
-            "id": 1,
-            "name": "John Doe"
-        },
-        {
-            "id": 2,
-            "name": "Jane Doe"
-        },
-        {
-            "id": 3,
-            "name": "Will Doo"
-        }
-    ],
-    "recipients": [
-        {
-            "id": 1,
-            "name": "Apple Bee"
-        },
-        {
-            "id": 2,
-            "name": "Cruella Deville"
-        },
-        {
-            "id": 3,
-            "name": "Bobby Bucher"
-        }
-    ],
-    "topics": [
-        {
-            "id": 1,
-            "name": "Emergency"
-        },
-        {
-            "id": 2,
-            "name": "Sup"
-        },
-        {
-            "id": 3,
-            "name": "Money Request"
-        }
-    ],
-    "messages": [
-        {
-            "id": 3,
-            "content": "Message content",
-            "dateSent": "date",
-            "authorId": 2,
-            "topicId": 1,
-            "recipientId": 3
-        }
-    ]
-   
+  "authors": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "email": "jane@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Will Doo",
+      "email": "willyD@gmail.com"
+    }
+  ],
+  "recipients": [
+    {
+      "id": 1,
+      "name": "Apple Bee",
+      "email": "AB@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Cruella Deville",
+      "email": "dalmatianKilla@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Bobby Bucher",
+      "email": "highqualityH20@gmail.com"
+    }
+  ],
+  "topics": [
+    {
+      "id": 1,
+      "name": "Emergency"
+    },
+    {
+      "id": 2,
+      "name": "Sup"
+    },
+    {
+      "id": 3,
+      "name": "Money Request"
+    }
+  ],
+  "letters": [
+    {
+      "id": 1,
+      "content": "Message content",
+      "dateSent": "date",
+      "authorId": 2,
+      "topicId": 1,
+      "recipientId": 3
+    },
+    {
+      "topicId": 3,
+      "id": 2,
+      "authorId": 2,
+      "content": "asdfasdf",
+      "recipientId": 2,
+      "date": 1644210459879
+    }
+  ]
 }

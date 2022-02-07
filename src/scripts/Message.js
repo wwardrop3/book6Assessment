@@ -1,1 +1,0 @@
-//purpose of this module is to output the message input html element
