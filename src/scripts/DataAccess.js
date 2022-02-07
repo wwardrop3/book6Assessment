@@ -11,16 +11,10 @@ export const applicationState = {
 }
 
 //navigate to the api directory in terminal before hosting the json server
+//json-server database.json -p 8088 -w
 const API = "http://localhost:8088"
 
-//define a function that extracts authors data from main database and saves to variable and export
-
-
-
-
-// this function iterates through authors, topics, recipients, and messages to fetch json for all in one function
-
-
+//FETCH author data from JSON file and then import it into application state
 export const fetchAuthors = () => {
     //gets the requests array from the api folder
     return fetch(`${API}/authors`) //Why doesnt this have a second parameter like the fetch method at the bottom???
@@ -35,6 +29,7 @@ export const fetchAuthors = () => {
             )
     }
     
+//FETCH topic data from JSON file and then import it into applicationState
 export const fetchTopics = () => {
     //gets the requests array from the api folder
     return fetch(`${API}/topics`) //Why doesnt this have a second parameter like the fetch method at the bottom???
@@ -49,6 +44,7 @@ export const fetchTopics = () => {
             )
     }
 
+//FETCH recipient data from JSON file and then import it into applicationState
 export const fetchRecipients = () => {
     //gets the requests array from the api folder
     return fetch(`${API}/recipients`) //Why doesnt this have a second parameter like the fetch method at the bottom???
@@ -63,6 +59,7 @@ export const fetchRecipients = () => {
             )
     }
 
+//FETCH stored letter object data from JSON file and then import it into applicationState
 export const fetchLetters = () => {
     //gets the requests array from the api folder
     return fetch(`${API}/letters`) //Why doesnt this have a second parameter like the fetch method at the bottom???
@@ -116,12 +113,10 @@ export const getLetters = () => {
 
 
 
-//create set functions
-
+//create set functions to take a chosen html element id and save to applicationState rawInputObject
 export const setAuthor = (id) => {
     applicationState.letterBuilder.authorId = id
 }
-
 
 export const setRecipient = (id) => {
     applicationState.letterBuilder.recipientId = id
@@ -131,27 +126,31 @@ export const setLetter = (letterString) => {
     applicationState.letterBuilder.content = letterString
 }
 
+//**DONT NEED TO SET TOPIC ID BECAUSE THAT IS DONE IN EXENT LISTENER...RADIO OBJECT SETS WHEN CLICKED */
+
+
+//takes in new unique letter id, calculated in sendButton event listener, and adds to rawInputObject
 export const setLetterId = (id) => {
     applicationState.letterBuilder.id = id
 }
 
+//resets temp letterBuilder in applicationState after sending temp letter object to json file
 export const resetLetterBuilder = () => {
     applicationState.letterBuilder = {}
 }
 
+//sets the date of when the submit button is clicked
 export const setSentTime = () => {
     applicationState.letterBuilder.date = Date.now()
 }
 
-document.addEventListener( //event listener is only listening within the container element
+document.addEventListener( 
     "click",
     (clickEvent) => {
         if(clickEvent.target.id.startsWith("topic")){
             const [,topicId] = clickEvent.target.id.split("--")
             applicationState.letterBuilder.topicId = parseInt(topicId)
-                //delete request was imported from the dataAccess module where we definined the fetch call to remove the json object with the id that is passed in
         }})
-
 
 //create functions to send temporary application data to permenant json file
 export const sendLetterBuilder = (userServiceRequest) => {
@@ -164,9 +163,8 @@ export const sendLetterBuilder = (userServiceRequest) => {
         body: JSON.stringify(userServiceRequest)
     }
 
-
-    //function sends
-    return fetch(`${API}/letters`, fetchOptions) //fetch options is defined above with the POST method.
+    //fetch options is defined above with the POST method.
+    return fetch(`${API}/letters`, fetchOptions) 
         .then(response => response.json())
         .then(() => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged")) //This will create a "stateChanged" (just like a "click") event...Program will listen for when this happens

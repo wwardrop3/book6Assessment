@@ -5,6 +5,8 @@ import { Recipients } from "./Recipients.js"
 import { Topics } from "./Topics.js"
 import { applicationState, getLetters, setAuthor, setLetter, setRecipient, setLetterId, resetLetterBuilder, sendLetterBuilder, getAuthors, getTopics, getRecipients } from "./DataAccess.js"
 
+
+//function that returns the skeleton of the html elements
 export const Outputs = () => {
     return `<h1>Pen Pal Society</h1>
         <section id = "authorInput">
@@ -41,26 +43,30 @@ export const Outputs = () => {
 }
 
 
+//function produces html element for each stored message to be shown under letter submit button
 export const letterOutput = () => {
     const letters = getLetters()
     let html = `<div class = "letterOutput">`
-        
-    const listArray = letters.map((letter) => {
-        const letterObject = letterBuilder(letter)
+    
+    //use MAP to return array of html objects from each saved letter object
+    const listArray = letters.map((rawLetterObject) => {
+        //for each saved letter object, invoke letterBuilder to the ids of each letter, to values
+        const builtLetterObject = letterBuilder(rawLetterObject)
         return `<div>
-        Dear ${letterObject.recipientName} (${letterObject.recipientEmail})
+        Dear ${builtLetterObject.recipientName} (${builtLetterObject.recipientEmail})
         <p>
-        ${letterObject.content}
+        ${builtLetterObject.content}
         <p>
-        Sincerely, ${letterObject.authorName} (${letterObject.authorEmail})
+        Sincerely, ${builtLetterObject.authorName} (${builtLetterObject.authorEmail})
         <p>
-        ${letterObject.date}
-        <div class="topicLabel">${letterObject.topicName}</div>
+        ${builtLetterObject.date}
+        <div class="topicLabel">${builtLetterObject.topicName}</div>
         
         </div>`
 
     })
-    html+= listArray.join("")
+    // joins each array item into one html string
+    html+= listArray.join("") 
     html+=`</div>`
     console.log(listArray)
     return html
@@ -70,40 +76,42 @@ export const letterOutput = () => {
     
 
 //finds the names of each id value and set to an object that will be passed into an ouput function that will display values under send letter button
-
-const letterBuilder = (letterInputObject) => {
+const letterBuilder = (rawLetterObject) => {
     const authors = getAuthors()
     const topics = getTopics()
     const recipients = getRecipients()
-    console.log(letterInputObject)
 
-
-
-    const outputLetterObject = {}
+    //creates an empty object that will store values for each id for presentation on page
+    const outputLetterObject = {} 
+    
+    //use find to match authorids with rawLetterObject author id and return author object
     const foundAuthor = authors.find(author => {
-        return author.id === letterInputObject.authorId
+        return author.id === rawLetterObject.authorId
     }) 
+    //set new properties for author name and email
     outputLetterObject.authorName = foundAuthor.name
     outputLetterObject.authorEmail = foundAuthor.email
 
+    //use find to match recipientIds with rawLetterObject recipient id and return recipient object
     const foundRecipient = recipients.find(recipient => {
-        return recipient.id === letterInputObject.recipientId
+        return recipient.id === rawLetterObject.recipientId
     }) 
+    //set new properties in output object with recipient name and email
     outputLetterObject.recipientName = foundRecipient.name
     outputLetterObject.recipientEmail = foundRecipient.email
 
-
-    outputLetterObject.content = letterInputObject.content
-    console.log(topics)
-    console.log(letterInputObject)
+    //iterate through topics objects until topic.id equals the inputobject topicId
     const foundTopic = topics.find(topic => {
-        return topic.id === letterInputObject.topicId}) 
-    
+        return topic.id === rawLetterObject.topicId}) 
+
+    //use returned topicobject to set new property in outputObject that has topic name
     outputLetterObject.topicName = foundTopic.name
 
+    //message content does not have an ID so the content is simply copied
+    outputLetterObject.content = rawLetterObject.content
 
-
-    outputLetterObject.date = letterInputObject.date
+    //date does not have ID so simply copy to output object
+    outputLetterObject.date = rawLetterObject.date
 
     return outputLetterObject
 

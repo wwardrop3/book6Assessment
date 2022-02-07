@@ -30,7 +30,6 @@ document.addEventListener(
             const lastIndex = letters.length -1
             const newId = letters[lastIndex].id + 1
 
-
             setLetterId(newId)
 
             const authorId = document.getElementById("author").value
@@ -50,7 +49,6 @@ document.addEventListener(
 
             renderHTML()
             
-
 
         }
     }
